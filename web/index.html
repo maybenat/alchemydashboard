@@ -43,7 +43,7 @@ $(document).ready(function() {
 <script>
 function constructPage(query) {
 
-    var json = $.getJSON("https://api.stackexchange.com/2.2/search/excerpts?order=desc&sort=creation&title=" + query + "&site=stackoverflow", function() {})
+    var json = $.getJSON("https://api.stackexchange.com/2.2/search/excerpts?order=desc&sort=creation&title=" + query + "&key=wAaCCVnUr8E)MkHlSesT5A((&site=stackoverflow", function() {})
 
     var twitt = $.get("api/" + encodeURIComponent(query)).success(function(data) {});
 
