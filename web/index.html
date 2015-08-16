@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
 <script src="app.js"></script>
@@ -25,6 +26,14 @@ body {
     body {
         padding-top: 0;
     }
+}
+
+body {
+    background: #fff;
+}
+
+.list-group-item-warning {
+    background-color: rgba(181,171,191,0.5);
 }
 
 .scrollup {
@@ -111,16 +120,22 @@ $(document).ready(function() {
     <div class="row">
         <div class="col-md-4">
             <center>
-                <h2>Classification</h2>
+                <h2><i class="fa fa-object-ungroup"></i>    Classification</h2>
                 <h3>Twitter Stream Top Keywords</h3>
-                <div id="ents1"></div>
-                <h3>Twitter Stream Taxonomy</h3>
-                <div id="ents2"></div>
-                <h3>SO Stream Top Keywords</h3>
-                <div id="ents3"></div>
-                <h3>SO Stream Taxonomy</h3>
-                <div id="ents4"></div>
             </center>
+            <div id="ents1"></div>
+            <center>
+                <h3>Twitter Stream Taxonomy</h3>
+            </center>
+            <div id="ents2"></div>
+            <center>
+                <h3>SO Stream Top Keywords</h3>
+            </center>
+            <div id="ents3"></div>
+            <center>
+                <h3>SO Stream Taxonomy</h3>
+            </center>
+            <div id="ents4"></div>
         </div>
         <div class="col-md-4">
             <center>
