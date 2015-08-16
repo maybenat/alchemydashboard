@@ -209,13 +209,13 @@ function constructPage(query) {
                 alchemizedEntities.complete(function() {
                     flag = true;
                     textAnalyzed.push('<span>' + '<i class="fa fa-twitter"></i>+<font color =' + "green" + '>' + alchemizedEntities.responseJSON.keywords[0].text + '</font></span><br>');
-                    console.log(textAnalyzed);
+                        $("#ents1").html(textAnalyzed.join(""));
+//console.log(textAnalyzed);
                 })
             }
         });
 
     };
-    $("#ents1").html(textAnalyzed.join(""));
 
 
     function handleTwitterRequests(index, id) {
@@ -301,7 +301,7 @@ function unique(origArr) {
 </div>
 <div class="row">
     <div id="ents1" class="col-md-4"></div>
-    <div id="ents1" class="col-md-4"></div>
+    <div id="MyEdit" class="col-md-4"></div>
     <div id="MyEdit2" class="col-md-4"></div>
 </div>
 </body>
