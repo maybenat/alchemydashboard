@@ -26,6 +26,18 @@ body {
         padding-top: 0;
     }
 }
+
+.scrollup {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+    display: none;
+    text-indent: -9999px;
+    background: url('back-to-top-icon.png') no-repeat;
+    background-color: #fff;
+}
 </style>
 
 <head>
@@ -40,6 +52,27 @@ $(document).ready(function() {
         var bla = $('#textBox').val();
         constructPage(bla);
     });
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+            $('.scrollup').fadeIn();
+        } else {
+            $('.scrollup').fadeOut();
+        }
+    });
+
+    $('.scrollup').click(function() {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 600);
+        return false;
+    });
+    $(document).keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var bla = $('#textBox').val();
+            constructPage(bla);
+        }
+    });
 });
 </script>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -51,7 +84,7 @@ $(document).ready(function() {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://www.alchemyapi.com"><img style="max-width:100px; margin-top: -7px;" src="logo.png"></a>
+            <a class="navbar-brand" href="http://www.alchemyapi.com"><img style="max-width:150px; margin-top: -7px;" src="logo.png"></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left" role="search">
@@ -67,6 +100,7 @@ $(document).ready(function() {
     </div>
 </nav>
 <script src="analyze.js"></script>
+<a href="#" class="scrollup">Scroll</a>
 
 <body>
     <div class="row">
@@ -75,9 +109,31 @@ $(document).ready(function() {
         <div id="container3" class="col-md-4"></div>
     </div>
     <div class="row">
-        <div id="ents1" class="col-md-4"></div>
-        <div id="MyEdit" class="col-md-4"></div>
-        <div id="MyEdit2" class="col-md-4"></div>
+        <div class="col-md-4">
+            <center>
+                <h2>Classification</h2>
+                <h3>Twitter Stream Top Keywords</h3>
+                <div id="ents1"></div>
+                <h3>Twitter Stream Taxonomy</h3>
+                <div id="ents2"></div>
+                <h3>SO Stream Top Keywords</h3>
+                <div id="ents3"></div>
+                <h3>SO Stream Taxonomy</h3>
+                <div id="ents4"></div>
+            </center>
+        </div>
+        <div class="col-md-4">
+            <center>
+                <h2><i class="fa fa-twitter"></i>    Tweet Sentiments</h2></center>
+            <ul class="list-group">
+                <div id="MyEdit"></div>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <center>
+                <h2><i class="fa fa-stack-overflow"></i>    SO Sentiments</h2></center>
+            <div id="MyEdit2"></div>
+        </div>
     </div>
 </body>
 

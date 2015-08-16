@@ -11,6 +11,9 @@ function constructPage(query) {
     var sendIn;
     var allSentiments = [];
     var textAnalyzed = [];
+    var textAnalyzed2 = [];
+    var taxonomy = [];
+    var taxonomy2 = [];
     var allTweetSentiments = [];
     var flag = false;
     var visualSentimentsT = [];
@@ -60,8 +63,6 @@ function constructPage(query) {
 
 
     function handleJsonRequests(index, id) {
-
-
         var alchemized = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
 
         })
@@ -89,15 +90,21 @@ function constructPage(query) {
                             vally = 0.001
                         }
                         if (vally <= 0.01 && vally >= -0.01) {
-                            sentColor = "grey";
+                            newHTML2.push('<li class="list-group-item list-group-item-info"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+                            // sentColor2 = "info";
                         }
                         if (vally > 0.01) {
-                            sentColor = "green";
+                            newHTML2.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+
+                            //   sentColor2 = "success";
                         }
                         if (vally < -0.01) {
-                            sentColor = "red";
+                            newHTML2.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+
+                            // sentColor2 = "danger";
                         }
-                        newHTML2.push('<p><span>' + '<i class="fa fa-stack-overflow"></i>+<font color =' + sentColor + '>' + allSentiments[i].id + '</font></span><br></p>');
+                        joinedStacks = allSentiments[i].id.join();
+
                     })(i);
 
                 }
@@ -154,11 +161,11 @@ function constructPage(query) {
                 series: [{
                     name: 'Stack Overflow',
                     color: '#af8dc3',
-                    data: dataCleaner2
+                    data: visualSentiments
                 }, {
                     name: 'Twitter',
                     color: '#7fbf7b',
-                    data: dataCleaner
+                    data: visualSentimentsT
                 }]
             });
             twAvg = average(visualSentimentsT);
@@ -190,13 +197,35 @@ function constructPage(query) {
                 var alchemizedEntities = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedTweets + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
                 alchemizedEntities.complete(function() {
                     flag = true;
-                    textAnalyzed.push('<span>' + '<i class="fa fa-check"></i>+<font color =' + "green" + '>' + alchemizedEntities.responseJSON.keywords[0].text + '</font></span><br>');
-                    textAnalyzed.push('<span>' + '<i class="fa fa-check"></i>+<font color =' + "green" + '>' + alchemizedEntities.responseJSON.keywords[1].text + '</font></span><br>');
-                    textAnalyzed.push('<span>' + '<i class="fa fa-check"></i>+<font color =' + "green" + '>' + alchemizedEntities.responseJSON.keywords[2].text + '</font></span><br>');
+                    if (textAnalyzed.length < 3) {
+                        textAnalyzed.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities.responseJSON.keywords[0].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities.responseJSON.keywords[0].relevance + '</i></b></p><br>');
+                        textAnalyzed.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities.responseJSON.keywords[1].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities.responseJSON.keywords[1].relevance + '</i></b></p><br>');
+                        textAnalyzed.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities.responseJSON.keywords[2].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities.responseJSON.keywords[2].relevance + '</i></b></p><br>');
 
+                        taxonomy.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities.responseJSON.taxonomy[0].label + '</b></i> with score=<b><i> ' + alchemizedEntities.responseJSON.taxonomy[0].score + '</i></b></p><br>');
+                        taxonomy.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities.responseJSON.taxonomy[1].label + '</b></i> with score=<b><i> ' + alchemizedEntities.responseJSON.taxonomy[1].score + '</i></b></p><br>');
+                        taxonomy.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities.responseJSON.taxonomy[2].label + '</b></i> with score=<b><i> ' + alchemizedEntities.responseJSON.taxonomy[2].score + '</i></b></p><br>');
+
+                    }
                     $("#ents1").html(textAnalyzed.join(""));
+                    $("#ents2").html(taxonomy.join(""));
                 })
             }
+             var alchemizedEntities2 = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedStacks + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
+                alchemizedEntities2.complete(function() {
+                    if (textAnalyzed2.length < 3) {
+                        textAnalyzed2.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[0].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[0].relevance + '</i></b></p><br>');
+                        textAnalyzed2.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[1].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[1].relevance + '</i></b></p><br>');
+                        textAnalyzed2.push('<p>' + '<h5>Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[2].text + '</b></i> with relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[2].relevance + '</i></b></p><br>');
+
+                        taxonomy2.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities2.responseJSON.taxonomy[0].label + '</b></i> with score=<b><i> ' + alchemizedEntities2.responseJSON.taxonomy[0].score + '</i></b></p><br>');
+                        taxonomy2.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities2.responseJSON.taxonomy[1].label + '</b></i> with score=<b><i> ' + alchemizedEntities2.responseJSON.taxonomy[1].score + '</i></b></p><br>');
+                        taxonomy2.push('<p>' + '<h5>Grouping : <b><i>' + alchemizedEntities2.responseJSON.taxonomy[2].label + '</b></i> with score=<b><i> ' + alchemizedEntities2.responseJSON.taxonomy[2].score + '</i></b></p><br>');
+
+                    }
+                    $("#ents3").html(textAnalyzed2.join(""));
+                    $("#ents4").html(taxonomy2.join(""));
+                })
         });
 
     };
@@ -228,15 +257,19 @@ function constructPage(query) {
                             vally2 = 0.001
                         }
                         if (vally2 <= 0.01 && vally2 >= -0.01) {
-                            sentColor2 = "grey";
+                            newHTML.push('<li class="list-group-item list-group-item-info"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
+                            // sentColor2 = "info";
                         }
                         if (vally2 > 0.01) {
-                            sentColor2 = "green";
+                            newHTML.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
+
+                            //   sentColor2 = "success";
                         }
                         if (vally2 < -0.01) {
-                            sentColor2 = "red";
+                            newHTML.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
+
+                            // sentColor2 = "danger";
                         }
-                        newHTML.push('<p><span>' + '<i class="fa fa-twitter"></i>+<font color =' + sentColor2 + '>' + allTweetSentiments[i].id + '</font></span><br></div></p>');
                         joinedTweets = allTweetSentiments[i].id.join();
                     })(i);
                 }
