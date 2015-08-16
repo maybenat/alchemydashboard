@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var port = process.env.PORT || 5555;
+var port = process.env.PORT || 5000;
 var router = express.Router();
 var Twitter = require('node-twitter');
  //Create the AlchemyAPI object
