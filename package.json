@@ -11,10 +11,6 @@
     "node-twitter": "^0.5.2",
     "request": "^2.27.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Natalie McMullen",
   "license": "ISC"
 }
