@@ -1,0 +1,21 @@
+{
+  "name": "alchemy_api",
+  "version": "1.0.0",
+  "description": "An Alchemy Dashboard",
+  "main": "/src/app.js",
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "consolidate": "^0.9.1",
+    "dustjs-linkedin": "^2.0.3",
+    "express": "^4.0.0",
+    "mongoose": "^3.6.20",
+    "node-twitter": "^0.5.2",
+    "request": "^2.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Natalie McMullen",
+  "license": "ISC"
+}
