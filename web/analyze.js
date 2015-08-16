@@ -132,9 +132,32 @@ function constructPage(query) {
                 },
                 series: [{
                     name: 'Stack Overflow',
+                    color: '#af8dc3',
                     data: dataCleaner2
                 }, {
                     name: 'Twitter',
+                    color: '#7fbf7b',
+                    data: dataCleaner
+                }]
+            });
+            $('#container3').highcharts({
+                chart: {
+                    type: 'column',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Area chart with negative values'
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Stack Overflow',
+                    color: '#af8dc3',
+                    data: dataCleaner2
+                }, {
+                    name: 'Twitter',
+                    color: '#7fbf7b',
                     data: dataCleaner
                 }]
             });
@@ -154,9 +177,11 @@ function constructPage(query) {
                     },
                     series: [{
                         name: 'Twitter',
+                        color: '#7fbf7b',
                         data: [twAvg]
                     }, {
                         name: 'Stack Overflow',
+                        color: '#af8dc3',
                         data: [sOAvg]
                     }]
                 });

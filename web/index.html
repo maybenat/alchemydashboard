@@ -17,15 +17,17 @@
 <script src="yo.js"></script>
 <link rel="stylesheet" href="style.css">
 <style>
-  body {
+body {
     padding-top: 60px;
-  }
-  @media (max-width: 980px) {
+}
+
+@media (max-width: 980px) {
     body {
-      padding-top: 0;
+        padding-top: 0;
     }
-  }
+}
 </style>
+
 <head>
     <title>
         API Analysis Tool
@@ -39,48 +41,44 @@ $(document).ready(function() {
         constructPage(bla);
     });
 });
-
 </script>
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="http://www.alchemyapi.com"><img style="max-width:100px; margin-top: -7px;"
-             src="logo.png"></a>
-
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" id="textBox" placeholder="Search">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.alchemyapi.com"><img style="max-width:100px; margin-top: -7px;" src="logo.png"></a>
         </div>
-        <button type="button" id="button" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://www.github.com/nataliemcmullen">by natalie mcmullen</a></li>
-      </ul>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="textBox" placeholder="Search">
+                </div>
+                <button type="button" id="button" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.github.com/nataliemcmullen">by natalie mcmullen</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
-
 <script src="analyze.js"></script>
 
 <body>
-<div class="row">
-    <div id="container2" class="col-md-4"></div>
-    <div id="container" class="col-md-4" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-</div>
-<div class="row">
-    <div id="ents1" class="col-md-4"></div>
-    <div id="MyEdit" class="col-md-4"></div>
-    <div id="MyEdit2" class="col-md-4"></div>
-</div>
-
+    <div class="row">
+        <div id="container2" class="col-md-4"></div>
+        <div id="container" class="col-md-4" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+        <div id="container3" class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div id="ents1" class="col-md-4"></div>
+        <div id="MyEdit" class="col-md-4"></div>
+        <div id="MyEdit2" class="col-md-4"></div>
+    </div>
 </body>
 
 </html>
