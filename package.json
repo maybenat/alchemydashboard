@@ -2,7 +2,6 @@
   "name": "alchemy_api",
   "version": "1.0.0",
   "description": "An Alchemy Dashboard",
-  "main": "/src/app.js",
   "dependencies": {
     "body-parser": "^1.0.2",
     "consolidate": "^0.9.1",
