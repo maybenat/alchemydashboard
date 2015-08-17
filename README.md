@@ -1,4 +1,20 @@
-# alchemydashboard
+Alchemy Dashboard
+===================
 
-This is a dashboard that pulls the latest tweets and stack overflow posts related to a query.
-The query is then analyzed for sentiment and key entities. 
+
+View the running app here: [link](https://alchemydashboard.herokuapp.com).
+
+----------
+
+
+Instructions
+-------------
+
+This is a node.js app.
+It makes use of the AlchemyAPI, StackOverflow API and Twitter API in order to help users analyze sentiment and identify keywords and groupings. 
+> **In order to make changes:**
+
+> - Download directory
+> - npm install
+> -  node src/app.js
+> - go to http://localhost:5000
