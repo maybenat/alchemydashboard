@@ -2,11 +2,8 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
-<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -51,7 +48,7 @@ body {
 
 <head>
     <title>
-        API Analysis Tool
+        Alchemy API Dashboard
     </title>
 </head>
 <script>
@@ -59,6 +56,10 @@ $(document).ready(function() {
     constructPage("alchemyapi");
     $("button").click(function() {
         var bla = $('#textBox').val();
+        textAnalyzed = [];
+        textAnalyzed2 = [];
+        taxonomy = [];
+        taxonomy2 = [];
         constructPage(bla);
     });
     $(window).scroll(function() {
@@ -120,8 +121,11 @@ $(document).ready(function() {
             </div>
             <div class="modal-body">
                 <p>Enter Search Items related to technology to see how people on stack overflow and twitter feel.</p>
-                <p>View if there is more positive sentiment on StackOverflow or Twitter.</p>
-                <p>
+                <p> <b> Example Queries: </b> javascript, node.js, alchemyapi, physics
+                    <p>View if there is more positive sentiment on StackOverflow or Twitter quickly from the first graph showing average sentiment. Click on it to see a breakdown of all the points contributing to the average. </p>
+                    <p>View the keywords and taxonomy classification for each query.</p>
+                    <p>The Twitter and StackOverflow Streams are encoded in red:negative sentiment, green:positive sentiment and white:neutral.</p>
+                    <p>
             </div>
         </div>
     </div>

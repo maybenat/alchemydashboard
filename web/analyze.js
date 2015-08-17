@@ -2,10 +2,7 @@ function constructPage(query) {
 
     var json = $.getJSON("https://api.stackexchange.com/2.2/search?order=desc&sort=creation&tagged=" + query + "&site=stackoverflow&filter=!0XMmcqR_jvgPugN2xyvxzlLdy&key=wAaCCVnUr8E)MkHlSesT5A((", function() {})
     var twitt = $.get("api/" + encodeURIComponent(query)).success(function(data) {});
-
-    console.log(json);
-    var allStackData;
-    var allTwittData, twAvg, sOAvg, joinedTweets, joinedStacks;
+    var allTwittData, twAvg, sOAvg, joinedTweets, joinedStacks, allStackData;
     var allTweets = [];
     var allArticles = [];
     var allLinks = [];
@@ -19,6 +16,9 @@ function constructPage(query) {
     var flag = false;
     var visualSentimentsT = [];
     var visualSentiments = [];
+
+
+    //On successful receive of json objects begin processing. 
     json.success(function() {
         twitt.success(function() {
             allStackData = json.responseJSON.items;
@@ -31,9 +31,6 @@ function constructPage(query) {
                     allTweets[i].push(allTwittData[i].text);
                 })(i);
             }
-
-
-
 
             for (var j = 0; j < allTweets.length; j++) {
                 (function(j) {
@@ -50,6 +47,7 @@ function constructPage(query) {
                     allLinks[i].push(allStackData[i].link);
                 })(i);
             }
+
             for (var j = 0; j < allArticles.length; j++) {
                 (function(j) {
                     handleJsonRequests(j, allArticles[j], allLinks[j]);
@@ -63,13 +61,12 @@ function constructPage(query) {
 
 
 
-
-
+    //This function calls the AlchemyAPI to get text sentiment
+    //Helper function to ensure that all json files are requested because of async problems with javascript
     function handleJsonRequests(index, id, id2) {
         var alchemized = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
 
         })
-
 
         alchemized.success(function() {
             if (isNaN(Number(alchemized.responseJSON.docSentiment.score))) {
@@ -97,17 +94,12 @@ function constructPage(query) {
                         }
                         if (vally <= 0.01 && vally >= -0.01) {
                             newHTML2.push('<li class="list-group-item list-group-item"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
-                            // sentColor2 = "info";
                         }
                         if (vally > 0.01) {
                             newHTML2.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
-
-                            //   sentColor2 = "success";
                         }
                         if (vally < -0.01) {
                             newHTML2.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
-
-                            // sentColor2 = "danger";
                         }
                         joinedStacks = allSentiments[i].id.join();
 
@@ -155,27 +147,6 @@ function constructPage(query) {
                     data: dataCleaner
                 }]
             });
-            // $('#container3').highcharts({
-            //     chart: {
-            //         type: 'column',
-            //         zoomType: 'xy'
-            //     },
-            //     title: {
-            //         text: 'Area chart with negative values'
-            //     },
-            //     credits: {
-            //         enabled: false
-            //     },
-            //     series: [{
-            //         name: 'Stack Overflow',
-            //         color: '#af8dc3',
-            //         data: visualSentiments
-            //     }, {
-            //         name: 'Twitter',
-            //         color: '#7fbf7b',
-            //         data: visualSentimentsT
-            //     }]
-            // });
             $('#container3').highcharts({
                 chart: {
                     backgroundColor: '#ffffff',
@@ -202,32 +173,6 @@ function constructPage(query) {
             });
             twAvg = average(visualSentimentsT);
             sOAvg = average(visualSentiments);
-
-            // $(function() {
-            //     $('#container2').highcharts({
-            //         chart: {
-            //             type: 'column'
-            //         },
-            //         title: {
-            //             text: 'Average Sentiment'
-            //         },
-            //         xAxis: {},
-            //         credits: {
-            //             enabled: false
-            //         },
-            //         series: [{
-            //             name: 'Twitter',
-            //             color: '#7fbf7b',
-            //             data: [twAvg]
-            //         }, {
-            //             name: 'Stack Overflow',
-            //             color: '#af8dc3',
-            //             data: [sOAvg]
-            //         }]
-            //     });
-            // });
-
-
             $('#container2').highcharts({
                 chart: {
 
@@ -256,7 +201,7 @@ function constructPage(query) {
                 },
 
                 series: [{
-                    name: 'Average Sentiment:',
+                    name: 'All Sentiment Points',
                     colorByPoint: true,
                     data: [{
                         name: 'Twitter',
@@ -325,7 +270,7 @@ function constructPage(query) {
 
         })
         alchemized2.success(function() {
-            if (isNaN(parseFloat(alchemized2.responseJSON.docSentiment.score))) {
+            if (isNaN(parseFloat(alchemized2.responseJSON.docSentiment.score)) || alchemized2.responseJSON.docSentiment.score === "undefined") {
                 allTweetSentiments.push({
                     id: id,
                     sentiment: 0.0001
@@ -347,17 +292,12 @@ function constructPage(query) {
                         }
                         if (vally2 <= 0.01 && vally2 >= -0.01) {
                             newHTML.push('<li class="list-group-item list-group-item"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
-                            // sentColor2 = "info";
                         }
                         if (vally2 > 0.01) {
                             newHTML.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
-
-                            //   sentColor2 = "success";
                         }
                         if (vally2 < -0.01) {
                             newHTML.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-twitter"></i><font color="black">&nbsp&nbsp' + allTweetSentiments[i].id + '</font></span><br></div></h5></li>');
-
-                            // sentColor2 = "danger";
                         }
                         joinedTweets = allTweetSentiments[i].id.join();
                     })(i);
@@ -373,7 +313,7 @@ function constructPage(query) {
 
 };
 
-
+//Helper average function
 function average(array) {
     var total = 0;
     for (var i = 0; i < array.length; i++) {
@@ -382,7 +322,7 @@ function average(array) {
     return avg = total / array.length;
 }
 
-//When we have multiple tweets come in at a time. 
+//When we have multiple tweets come in at a time. Dont want to skew the data, so we clean it. 
 function unique(origArr) {
     var newArr = [],
         origLen = origArr.length,
