@@ -15,6 +15,7 @@ It makes use of the AlchemyAPI, StackOverflow API and Twitter API in order to he
 > **In order to make changes:**
 
 > - Download directory
+> - Go to src/router.js and replace the Twitter credentials with your own. 
 > - npm install
-> -  node src/app.js
+> - node src/app.js
 > - go to http://localhost:5000
