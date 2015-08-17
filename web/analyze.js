@@ -64,7 +64,7 @@ function constructPage(query) {
     //This function calls the AlchemyAPI to get text sentiment
     //Helper function to ensure that all json files are requested because of async problems with javascript
     function handleJsonRequests(index, id, id2) {
-        var alchemized = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
+        var alchemized = $.getJSON("https://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
 
         })
 
@@ -227,7 +227,7 @@ function constructPage(query) {
             });
 
             if (flag === false) {
-                var alchemizedEntities = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedTweets + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
+                var alchemizedEntities = $.getJSON("https://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedTweets + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
                 alchemizedEntities.complete(function() {
                     flag = true;
                     if (textAnalyzed.length < 3) {
@@ -246,7 +246,7 @@ function constructPage(query) {
                     $("#ents2").html(taxonomy.join(""));
                 })
             }
-            var alchemizedEntities2 = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedStacks + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
+            var alchemizedEntities2 = $.getJSON("https://access.alchemyapi.com/calls/text/TextGetCombinedData?text=" + joinedStacks + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {})
             alchemizedEntities2.complete(function() {
                 if (textAnalyzed2.length < 3) {
                     textAnalyzed2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[0].text + '</b></i><br> Relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[0].relevance + '</i></b></div></font></h5></li>');
@@ -266,7 +266,7 @@ function constructPage(query) {
 
 
     function handleTwitterRequests(index, id) {
-        var alchemized2 = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
+        var alchemized2 = $.getJSON("https://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
 
         })
         alchemized2.success(function() {
