@@ -2,7 +2,7 @@ Alchemy Dashboard
 ===================
 
 
-View the running app here: [link](https://alchemydashboard.herokuapp.com).
+View the running app here: [link](http://alchemydashboard.herokuapp.com).
 
 ----------
 
