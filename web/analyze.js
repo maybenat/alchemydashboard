@@ -1,13 +1,14 @@
 function constructPage(query) {
 
-    var json = $.getJSON("https://api.stackexchange.com/2.2/search/excerpts?order=desc&sort=creation&title=" + query + "&key=wAaCCVnUr8E)MkHlSesT5A((&site=stackoverflow", function() {})
-
+    var json = $.getJSON("https://api.stackexchange.com/2.2/search?order=desc&sort=creation&tagged=" + query + "&site=stackoverflow&filter=!0XMmcqR_jvgPugN2xyvxzlLdy&key=wAaCCVnUr8E)MkHlSesT5A((", function() {})
     var twitt = $.get("api/" + encodeURIComponent(query)).success(function(data) {});
 
+    console.log(json);
     var allStackData;
     var allTwittData, twAvg, sOAvg, joinedTweets, joinedStacks;
     var allTweets = [];
     var allArticles = [];
+    var allLinks = [];
     var sendIn;
     var allSentiments = [];
     var textAnalyzed = [];
@@ -44,12 +45,14 @@ function constructPage(query) {
             for (var i = 0; i < allStackData.length; i++) {
                 (function(i) {
                     allArticles[i] = [];
-                    allArticles[i].push(allStackData[i].body);
+                    allArticles[i].push(allStackData[i].title);
+                    allLinks[i] = [];
+                    allLinks[i].push(allStackData[i].link);
                 })(i);
             }
             for (var j = 0; j < allArticles.length; j++) {
                 (function(j) {
-                    handleJsonRequests(j, allArticles[j]);
+                    handleJsonRequests(j, allArticles[j], allLinks[j]);
                 })(j);
             }
 
@@ -62,20 +65,23 @@ function constructPage(query) {
 
 
 
-    function handleJsonRequests(index, id) {
+    function handleJsonRequests(index, id, id2) {
         var alchemized = $.getJSON("http://access.alchemyapi.com/calls/text/TextGetTextSentiment?text=" + id + "&apikey=85e62ad889b1b15314bb96cf6387592215231fc5&outputMode=json", function() {
 
         })
+
 
         alchemized.success(function() {
             if (isNaN(Number(alchemized.responseJSON.docSentiment.score))) {
                 allSentiments.push({
                     id: id,
+                    id2: id2,
                     sentiment: 0.01
                 })
             } else {
                 allSentiments.push({
                     id: id,
+                    id2: id2,
                     sentiment: parseFloat(alchemized.responseJSON.docSentiment.score)
                 });
                 visualSentiments.push(parseFloat(alchemized.responseJSON.docSentiment.score));
@@ -90,16 +96,16 @@ function constructPage(query) {
                             vally = 0.001
                         }
                         if (vally <= 0.01 && vally >= -0.01) {
-                            newHTML2.push('<li class="list-group-item list-group-item"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+                            newHTML2.push('<li class="list-group-item list-group-item"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
                             // sentColor2 = "info";
                         }
                         if (vally > 0.01) {
-                            newHTML2.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+                            newHTML2.push('<li class="list-group-item list-group-item-success"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
 
                             //   sentColor2 = "success";
                         }
                         if (vally < -0.01) {
-                            newHTML2.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br></div></h5></li>');
+                            newHTML2.push('<li class="list-group-item list-group-item-danger"><h5><span>' + '<i class="fa fa-stack-overflow"></i><font color="black">&nbsp&nbsp' + allSentiments[i].id + '</font></span><br><a href=' + allSentiments[i].id2 + ' target="_blank"><center>View full text</a></center></br></div></h5></li>');
 
                             // sentColor2 = "danger";
                         }
@@ -300,7 +306,6 @@ function constructPage(query) {
                 if (textAnalyzed2.length < 3) {
                     textAnalyzed2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[0].text + '</b></i><br> Relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[0].relevance + '</i></b></div></font></h5></li>');
                     textAnalyzed2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[1].text + '</b></i><br> Relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[1].relevance + '</i></b></div></font></h5></li>');
-                    textAnalyzed2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Keyword : <b><i>' + alchemizedEntities2.responseJSON.keywords[2].text + '</b></i><br> Relevance=<b><i> ' + alchemizedEntities2.responseJSON.keywords[2].relevance + '</i></b></div></font></h5></li>');
 
                     taxonomy2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Grouping : <b><i>' + alchemizedEntities2.responseJSON.taxonomy[0].label + '</b></i><br> Score=<b><i> ' + alchemizedEntities2.responseJSON.taxonomy[0].score + '</i></b></div></font></h5></li>');
                     taxonomy2.push('<li class="list-group-item list-group-item-info"><font color="black"><h4>' + 'Grouping : <b><i>' + alchemizedEntities2.responseJSON.taxonomy[1].label + '</b></i><br> Score=<b><i> ' + alchemizedEntities2.responseJSON.taxonomy[1].score + '</i></b></div></font></h5></li>');
